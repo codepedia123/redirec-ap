@@ -1,7 +1,13 @@
 FROM nginx:alpine
-# Copy the config to the standard Nginx location
-COPY nginx.conf /etc/nginx/nginx.conf
-# Copy your HTML file
+
+# 1. Put the template in the official Nginx templates folder
+COPY default.conf.template /etc/nginx/templates/default.conf.template
+
+# 2. Put your HTML file in the standard location
 COPY redirect.html /usr/share/nginx/html/redirect.html
-# Standard start command
-CMD ["nginx", "-g", "daemon off;"]
+
+# No CMD or Start command needed! 
+# The official Nginx image will automatically:
+# - Find the template
+# - Swap ${PORT} for the real number
+# - Start Nginx for you
